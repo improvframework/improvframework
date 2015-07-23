@@ -5,35 +5,37 @@ namespace Improv\Http\Request;
 /**
  * @coversDefaultClass \Improv\Http\Request\Method
  */
-class MethodTest extends \PHPUnit_Framework_TestCase {
+class MethodTest extends \PHPUnit_Framework_TestCase
+{
 
-  /**
-   * @test
-   * @dataProvider validMethodProvider
-   *
-   * @covers ::isValid
-   */
-  public function testIsValidMethod( $code, $expected ) {
+    /**
+     * @test
+     * @dataProvider validMethodProvider
+     *
+     * @covers ::isValid
+     */
+    public function testIsValidMethod($code, $expected)
+    {
 
-    $actual = Method::isValid( $code );
-    $this->assertTrue( $expected === $actual );
+        $actual = Method::isValid($code);
+        $this->assertTrue($expected === $actual);
 
-  }
+    }
 
-  /**
-   * @return array
-   */
-  public function validMethodProvider() {
+    /**
+     * @return array
+     */
+    public function validMethodProvider()
+    {
 
-    return [
+        return [
 
-      [ 'GET', true ],
-      [ 'POST', true ],
-      [ 'GET /something', false],
-      [ 'JIM', false ]
+            [ 'GET', true ],
+            [ 'POST', true ],
+            [ 'GET /something', false],
+            [ 'JIM', false ]
 
-    ];
+        ];
 
-  }
-
+    }
 }
