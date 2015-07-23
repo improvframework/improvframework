@@ -16,8 +16,11 @@
 	</tstamp>
 
 
+	<target name="test" depends="prepare,sniff,test-unit" />
 
-	<target name="build" depends="prepare,sniff,test-unit,documentapi" />
+	<target name="build" depends="test,documentapi" />
+
+
 
 	<target name="clean">
 		<delete dir="${dir.build}" includeemptydirs="true" verbose="true" />
