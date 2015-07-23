@@ -47,42 +47,43 @@ namespace Improv\Http\Request;
  * @author  Jim DeLois <%%PHPDOC_AUTHOR_EMAIL%%>
  * @package Improv\Http\Request
  */
-class Method {
+class Method
+{
 
-  const HEAD    = 'HEAD';
-  const OPTIONS = 'OPTIONS';
+    const HEAD    = 'HEAD';
+    const OPTIONS = 'OPTIONS';
 
-  const GET     = 'GET';
+    const GET     = 'GET';
 
-  const POST    = 'POST';
-  const PUT     = 'PUT';
-  const PATCH   = 'PATCH';
+    const POST    = 'POST';
+    const PUT     = 'PUT';
+    const PATCH   = 'PATCH';
 
-  const DELETE  = 'DELETE';
-  const PURGE   = 'PURGE';
+    const DELETE  = 'DELETE';
+    const PURGE   = 'PURGE';
 
-  const TRACE   = 'TRACE';
-  const CONNECT = 'CONNECT';
+    const TRACE   = 'TRACE';
+    const CONNECT = 'CONNECT';
 
-  /**
-   * Validates whether the input request method is defined
-   * as a constant in this class.
-   *
-   * @param string $method The request method to validate
-   *
-   * @return bool
-   */
-  public static function isValid( $method ) {
+    /**
+     * Validates whether the input request method is defined
+     * as a constant in this class.
+     *
+     * @param string $method The request method to validate
+     *
+     * @return bool
+     */
+    public static function isValid($method)
+    {
 
-    static $cache_map = null;
+        static $cache_map = null;
 
-    if ( $cache_map === null ) {
-      $class     = new \ReflectionClass( get_called_class() );
-      $cache_map = array_values( $class->getConstants() );
+        if ($cache_map === null) {
+            $class     = new \ReflectionClass(get_called_class());
+            $cache_map = array_values($class->getConstants());
+        }
+
+        return in_array($method, $cache_map);
+
     }
-
-    return in_array( $method, $cache_map );
-
-  }
-
 }
