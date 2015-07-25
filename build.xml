@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-		name="Improv Framework | Exception"
+		name="Improv Framework | HTTP Constants"
 		basedir="."
 		default="build"
 		description="The primary build file for the Improv Framework Exception Library"

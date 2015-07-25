@@ -12,10 +12,10 @@ before_install:
   composer self-update
 
 install:
-  composer install
+  composer install --no-interaction
 
 script:
   php ./vendor/bin/phing test
 
-after_script:
+after_success:
   php ./vendor/bin/coveralls -v
