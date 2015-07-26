@@ -16,3 +16,6 @@ install:
 
 script:
   php ./vendor/bin/phing test
+
+after_script:
+  php ./vendor/bin/test-reporter --coverage-report=build/reports/phpunit-coverage-clover.xml
