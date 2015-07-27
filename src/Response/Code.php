@@ -115,6 +115,7 @@ final class Code
     const NOT_EXTENDED                         = 510;
     const NETWORK_AUTHENTICATION_REQUIRED      = 511;
 
+
     /**
      * Validates whether the input response code is defined
      * as a constant in this class.
