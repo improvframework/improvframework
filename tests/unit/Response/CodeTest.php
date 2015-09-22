@@ -13,6 +13,8 @@ class CodeTest extends \PHPUnit_Framework_TestCase
      * @dataProvider validCodeProvider
      *
      * @covers ::isValid
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function testIsValidCode($code, $expected)
     {
