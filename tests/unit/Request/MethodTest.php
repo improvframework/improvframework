@@ -13,6 +13,8 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      * @dataProvider validMethodProvider
      *
      * @covers ::isValid
+     *
+     * @SuppressWarnings(PHPMD.StaticAccess)
      */
     public function testIsValidMethod($code, $expected)
     {
