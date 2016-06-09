@@ -6,7 +6,7 @@
 
 # Improv Framework - Configuration
 
-An opinionated Configuration object for parsing Key-Value sarrays.
+An opinionated Configuration object for parsing Key-Value arrays.
 
 ## Installation ##
 

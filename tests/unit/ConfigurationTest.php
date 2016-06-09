@@ -9,8 +9,18 @@ class ConfigurationTest extends AbstractTestCase
     /**
      * @test
      */
-    public function truth()
+    public function basicGets()
     {
-        $this->assertTrue(true);
+        $data = [
+            'CFG_ONE'   => 'one',
+            'CFG_TWO'   => 'two',
+            'OTHER_ONE' => 'otherone'
+        ];
+
+        $sut_one = new Configuration($data, 'CFG_');
+
+        self::assertSame('one', $sut_one->get('ONE'));
+        self::assertSame('two', $sut_one->get('TWO'));
+
     }
 }

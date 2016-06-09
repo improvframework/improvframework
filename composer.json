@@ -1,6 +1,6 @@
 {
     "name": "improvframework/configuration",
-    "description": "An opinionated Configuration object for parsing Key-Value sarrays.",
+    "description": "An opinionated Configuration object for parsing Key-Value arrays.",
     "type": "library",
     "keywords": [
         "keywords"
