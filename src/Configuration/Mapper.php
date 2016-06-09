@@ -4,10 +4,6 @@ namespace Improv\Configuration;
 
 class Mapper
 {
-    /**
-     * @var mixed
-     */
-    private $value;
 
     /**
      * @var mixed
@@ -20,28 +16,22 @@ class Mapper
     private $func;
 
     /**
-     * @param mixed $value
-     */
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
-
-    /**
+     * @param string $value
+     *
      * @return mixed
      */
-    public function map()
+    public function map($value)
     {
-        if ($this->cached !== null) {
-            return $this->cached;
+        if (isset($this->cached[$value])) {
+            return $this->cached[$value];
         }
 
         if ($this->func === null) {
-            return $this->cached = $this->value;
+            return $this->cached[$value] = $value;
         }
 
         $func = $this->func;
-        return $this->cached = $func($this->value);
+        return $this->cached[$value] = $func($value);
     }
 
     /**

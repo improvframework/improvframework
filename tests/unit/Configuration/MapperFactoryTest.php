@@ -22,8 +22,7 @@ class MapperFactoryTest extends AbstractTestCase
     {
         $sut = new MapperFactory();
 
-        self::assertInstanceOf(Mapper::class, $sut->createNew('value'));
-
+        self::assertInstanceOf(Mapper::class, $sut->createNew());
     }
 
     /**
@@ -34,7 +33,7 @@ class MapperFactoryTest extends AbstractTestCase
     {
         $sut = new MapperFactory(ValidMapper::class);
 
-        self::assertInstanceOf(ValidMapper::class, $sut->createNew('value'));
+        self::assertInstanceOf(ValidMapper::class, $sut->createNew());
     }
 
     /**

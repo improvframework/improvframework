@@ -42,8 +42,8 @@ class MapperFactory
      *
      * @return Mapper
      */
-    public function createNew($value)
+    public function createNew()
     {
-        return new $this->mapper_class($value);
+        return new $this->mapper_class();
     }
 }

@@ -19,6 +19,11 @@ class Configuration
     private $factory_mapper;
 
     /**
+     * @var Mapper[]
+     */
+    private $mappers;
+
+    /**
      * @param array              $config
      * @param string             $prefix
      * @param MapperFactory|null $mapper_factory
@@ -61,22 +66,24 @@ class Configuration
     }
 
     /**
-     * Configures a Mapper object for the given Key
+     * Configures a Mapper object for the given Keys
      *
-     * The Mapper object can be configured
+     * The Mapper object can be configured externally by being returned and, as it is stored as a reference,
+     * will be shared across all "mapped" keys.
      *
-     * @param $key
+     * @param string[] $keys
      * @return Mapper
      *
      * @throws InvalidKeyException
      */
-    public function map($key)
+    public function map(...$keys)
     {
-        $this->checkKeyExists($key);
+        $mapper = $this->factory_mapper->createNew();
 
-        $mapper = $this->factory_mapper->createNew($this->config[$key]);
-
-        $this->config[$key] = $mapper;
+        array_walk($keys, function ($key) use ($mapper) {
+            $this->checkKeyExists($key);
+            $this->mappers[$key] = $mapper;
+        });
 
         return $mapper;
     }
@@ -95,8 +102,8 @@ class Configuration
     {
         $this->checkKeyExists($key);
 
-        if ($this->config[$key] instanceof Mapper) {
-            return $this->config[$key]->map();
+        if (isset($this->mappers[$key])) {
+            return $this->mappers[$key]->map($this->config[$key]);
         }
 
         return $this->config[$key];

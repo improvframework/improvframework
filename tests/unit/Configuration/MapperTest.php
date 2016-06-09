@@ -18,7 +18,7 @@ class MapperTest extends AbstractTestCase
      */
     public function returnOriginalValueIfNoFunction()
     {
-        self::assertSame('Original Value', (new Mapper('Original Value'))->map());
+        self::assertSame('Original Value', (new Mapper())->map('Original Value'));
     }
 
     /**
@@ -29,13 +29,13 @@ class MapperTest extends AbstractTestCase
         $original_value = 'baloney';
         $mapped_value   = 'YENOLAB';
 
-        $sut            = new Mapper($original_value);
+        $sut            = new Mapper();
 
         $sut->using(function ($value) {
             return strrev(strtoupper($value));
         });
 
-        self::assertSame($mapped_value, $sut->map());
+        self::assertSame($mapped_value, $sut->map($original_value));
     }
 
     /**
@@ -53,12 +53,12 @@ class MapperTest extends AbstractTestCase
             ->with($original_value)
             ->willReturn($mapped_value);
 
-        $sut = new Mapper($original_value);
+        $sut = new Mapper();
 
         $sut->using($test_map);
 
-        self::assertSame($mapped_value, $sut->map());
-        self::assertSame($mapped_value, $sut->map());
+        self::assertSame($mapped_value, $sut->map($original_value));
+        self::assertSame($mapped_value, $sut->map($original_value));
     }
 
     /**
@@ -67,10 +67,10 @@ class MapperTest extends AbstractTestCase
      */
     public function toInt($original, $expected)
     {
-        $sut = new Mapper($original);
+        $sut = new Mapper();
         $sut->toInt();
 
-        self::assertSame($expected, $sut->map());
+        self::assertSame($expected, $sut->map($original));
     }
 
     /**
@@ -79,10 +79,10 @@ class MapperTest extends AbstractTestCase
      */
     public function toBool($original, $expected)
     {
-        $sut = new Mapper($original);
+        $sut = new Mapper();
         $sut->toBool();
 
-        self::assertSame($expected, $sut->map());
+        self::assertSame($expected, $sut->map($original));
     }
 
     /**

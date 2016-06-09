@@ -36,7 +36,6 @@ class ConfigurationTest extends AbstractTestCase
 
         self::assertSame('one', $sut_three->get('CFG_ONE'));
         self::assertSame('otherone', $sut_three->get('OTHER_ONE'));
-
     }
 
     /**
@@ -97,25 +96,33 @@ class ConfigurationTest extends AbstractTestCase
      */
     public function mappingValues()
     {
-        $factory        = $this->createMock(MapperFactory::class);
-        $mapper         = $this->createMock(Mapper::class);
-
-        $key            = 'BALONEY';
-        $original_value = 'Original Value';
-        $mapped_value   = 'Mapped Value';
+        $factory = $this->createMock(MapperFactory::class);
+        $mapper  = $this->createMock(Mapper::class);
 
         $factory
             ->method('createNew')
-            ->with($original_value)
             ->willReturn($mapper);
 
         $mapper
             ->method('map')
-            ->willReturn($mapped_value);
+            ->willReturnMap([
+                [ 'Original Value 1', 'Mapped Value 1' ],
+                [ 'Original Value 2', 'Mapped Value 2' ],
+                [ 'Original Value 3', 'Mapped Value 3' ],
+            ]);
 
-        $sut = new Configuration([$key => $original_value], '', $factory);
+        $config = [
+            'KEY1' => 'Original Value 1',
+            'KEY2' => 'Original Value 2',
+            'KEY3' => 'Original Value 3',
+        ];
 
-        self::assertSame($mapper, $sut->map($key));
-        self::assertSame($mapped_value, $sut->get($key));
+        $sut = new Configuration($config, '', $factory);
+
+        self::assertSame($mapper, $sut->map('KEY1', 'KEY2', 'KEY3'));
+
+        self::assertSame('Mapped Value 1', $sut->get('KEY1'));
+        self::assertSame('Mapped Value 2', $sut->get('KEY2'));
+        self::assertSame('Mapped Value 3', $sut->get('KEY3'));
     }
 }
