@@ -13,4 +13,4 @@ buildconfig:
       xml:  ./build/reports/phpmetrics-violations.xml
     chart:
       bubbles: ./build/reports/phpmetrics-bubbles.svg
-  failure: average.maintainabilityIndex < 100
+  failure: average.maintainabilityIndex < 85
