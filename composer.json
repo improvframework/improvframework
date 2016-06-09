@@ -38,7 +38,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Improv\\Test\\": "tests/lib"
+            "Improv\\Configuration\\Test\\": "tests/lib"
         }
     }
 }

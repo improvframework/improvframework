@@ -1,6 +1,6 @@
 <?php
 
-namespace Improv\Test;
+namespace Improv\Configuration\Test;
 
 abstract class AbstractTestCase extends \PHPUnit_Framework_TestCase
 {
