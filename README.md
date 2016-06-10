@@ -82,17 +82,26 @@ $config->get('PHPFPM_BUFFER_COUNT'); // throws InvalidKeyException
 ```
 This becomes particularly useful when registering and referencing various configurations within, say, a container and services within the application are only interested in certain variables.
 
+The `withPrefix` method will take a given, "base" Configuration object and return a new one from it, applying another layer of filtering by prefix on from the keys in the base.
+
 ```php
-$container['config.debug'] = function () {
-	return new \Improv\Configuration($_ENV, 'APP_DEBUG_');
+$container['config.app'] = function () {
+	return new \Improv\Configuration($_ENV, 'APP_');
 };
 
-$container['config.db'] = function () {
-	return new \Improv\Configuration($_ENV, 'APP_DB_');
+$container['config.debug'] = function (Container $container) {
+    $base = $container->get('config.app');
+    return $base->withPrefix('DEBUG_');
 };
 
-$container['config.api'] = function () {
-	return new \Improv\Configuration($_ENV, 'APP_SOMESERVICE_API_');
+$container['config.db'] = function (Container $container) {
+	$base = $container->get('config.app');
+	return $base->withPrefix('DB_');
+};
+
+$container['config.api'] = function (Container $container) {
+    $base = $container->get('config.app');
+    return $base->withPrefix('SOMESERVICE_API_');
 };
 
 // ... //

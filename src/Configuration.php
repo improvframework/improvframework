@@ -14,6 +14,11 @@ class Configuration
     private $config;
 
     /**
+     * @var string
+     */
+    private $prefix;
+
+    /**
      * @var MapperFactory
      */
     private $factory_mapper;
@@ -32,6 +37,7 @@ class Configuration
     {
 
         $this->config         = $config;
+        $this->prefix         = $prefix;
         $this->factory_mapper = ($mapper_factory) ?: new MapperFactory();
 
         if (!$prefix) {
@@ -107,6 +113,28 @@ class Configuration
         }
 
         return $this->config[$key];
+    }
+
+    /**
+     * Generates a new Configuration object from the current one, applying another layer of prefix filtration.
+     *
+     * @param string $prefix
+     *
+     * @return Configuration
+     */
+    public function withPrefix($prefix)
+    {
+        $config          = new self($this->config, $prefix, $this->factory_mapper);
+        $config->mappers = [];
+
+        foreach ($this->mappers as $key => $mapper) {
+            if (strpos($key, $prefix) !== 0) {
+                continue;
+            }
+            $config->mappers[str_replace($prefix, '', $key)] = $mapper;
+        }
+
+        return $config;
     }
 
     /**

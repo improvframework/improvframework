@@ -125,4 +125,40 @@ class ConfigurationTest extends AbstractTestCase
         self::assertSame('Mapped Value 2', $sut->get('KEY2'));
         self::assertSame('Mapped Value 3', $sut->get('KEY3'));
     }
+
+    /**
+     * @test
+     */
+    public function withPrefix()
+    {
+        $data = [
+            'OUTER_PREFIX_ONE'   => 'One',
+            'OUTER_PREFIX_TWO'   => 'Two',
+            'OUTER_THING'        => 'Thing',
+        ];
+
+        $original = new Configuration($data, 'OUTER_');
+
+        $original->map('PREFIX_TWO')->using(function ($val) {
+            return strrev(strtoupper($val));
+        });
+
+        $original->map('THING')->using(function ($val) {
+            return strrev(strtoupper($val));
+        });
+
+        self::assertSame('GNIHT', $original->get('THING'));
+
+        $sut = $original->withPrefix('PREFIX_');
+
+        self::assertInstanceOf(Configuration::class, $sut);
+
+        self::assertSame('One', $sut->get('ONE'));
+        self::assertSame('OWT', $sut->get('TWO'));
+
+        $this->expectException(InvalidKeyException::class);
+        $this->expectExceptionMessage('No such key "THING" exists in Config.');
+
+        $sut->get('THING');
+    }
 }
