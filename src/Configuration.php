@@ -26,7 +26,7 @@ class Configuration
     /**
      * @var Mapper[]
      */
-    private $mappers;
+    private $mappers = [];
 
     /**
      * @param array              $config

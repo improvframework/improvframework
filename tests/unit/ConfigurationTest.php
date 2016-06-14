@@ -129,7 +129,7 @@ class ConfigurationTest extends AbstractTestCase
     /**
      * @test
      */
-    public function withPrefix()
+    public function withPrefixWithMappers()
     {
         $data = [
             'OUTER_PREFIX_ONE'   => 'One',
@@ -160,5 +160,20 @@ class ConfigurationTest extends AbstractTestCase
         $this->expectExceptionMessage('No such key "THING" exists in Config.');
 
         $sut->get('THING');
+    }
+
+    /**
+     * @test
+     * @see https://github.com/improvframework/configuration/issues/7
+     */
+    public function withPrefixWithoutMappers()
+    {
+        $data = [ 'OUTER_PREFIX_ONE' => 'One' ];
+
+        // This call would raise an error as per:
+        //  https://github.com/improvframework/configuration/issues/7
+        $sut = (new Configuration($data, 'OUTER_'))->withPrefix('PREFIX_');
+
+        self::assertInstanceOf(Configuration::class, $sut);
     }
 }
